@@ -36,9 +36,6 @@ function Register() {
         .catch((error) => {
           console.error('Error:', error);
         });
-
-        //localStorage.setItem("user-info", JSON.stringify(data))
-        //navigate.push('/login');
     }
 
 
