@@ -17,7 +17,7 @@ function Register() {
     //const navigate = useNavigate();
 
     async function signUp() {
-         let item = { userName: userName, email: email, password: password}
+         let item = { username: userName, email: email, password: password}
         console.log(item) 
 
         fetch('http://localhost:8080/api/user/create', {
@@ -29,7 +29,7 @@ function Register() {
             }
         }).then((response) => {
             response.json(); 
-            console.log(response)})
+            /* console.log(response) */})
         .then((data) => {
           console.log('Success:', data);
         })
@@ -41,7 +41,6 @@ function Register() {
         //navigate.push('/login');
     }
 
-    console.log(userName, email, password)
 
     return (
         <>  
