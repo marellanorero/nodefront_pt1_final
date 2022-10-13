@@ -10,10 +10,12 @@ body{
   border-radius: .55rem;
   position: relative;
   width: 100%;
+  min-height: 100vh;
   box-shadow: 0 1px 2px 0 rgb(0 0 0 / 10%);
 }
 .chat-app .people-list {
   width: 280px;
+  min-height: 100vh;
   position: absolute;
   left: 0;
   top: 0;
@@ -24,6 +26,9 @@ body{
 .chat-app .chat {
   margin-left: 280px;
   border-left: 1px solid #eaeaea
+}
+.icons {
+  font-size: 25px;
 }
 
 .people-list {
@@ -90,7 +95,8 @@ body{
 
 .chat .chat-history {
   padding: 20px;
-  border-bottom: 2px solid #fff
+  border-bottom: 2px solid #fff;
+  min-height: 100vh;
 }
 
 .chat .chat-history ul {

@@ -1,20 +1,14 @@
 import Logo from "../img/logo.png";
-//import { Socket } from 'socket.io';
-//import io from 'socket.io-client';
 import { useState } from 'react';
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-
-
-
-//const socket = io('http://localhost:4000');
 
 function Register() {
 
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    //const navigate = useNavigate();
+    const navigate = useNavigate();
 
     async function signUp() {
          let item = { username: userName, email: email, password: password}
@@ -30,6 +24,7 @@ function Register() {
         }).then((response) => {
             response.json(); 
             /* console.log(response) */})
+            navigate('/chat')
         .then((data) => {
           console.log('Success:', data);
         })
@@ -57,11 +52,14 @@ function Register() {
                     <input type="email" className="form-control" id="email" name="email" placeholder="name@example.com" onChange={(e) =>{setEmail(e.target.value)}}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label" value={password}>Password</label>
-                    <input className="form-control" id="password" name="password" placeholder="******" rows="3" onChange={(e) =>{setPassword(e.target.value)}}></input>
+                    <label htmlFor="pwd" className="form-label" value={password}>Password</label>
+                    <input type="password" className="form-control" id="pwd" name="password" placeholder="******" rows="3" onChange={(e) =>{setPassword(e.target.value)}}></input>
                 </div>
                  <div className="d-grid">
                     <button type="submit" className=" btn btn-primary  btn-sm gap-2">Register</button>
+                 </div>
+                 <div className="link d-flex justify-content-end">
+                    <a href="/login" class="link-primary">Ya tengo una cuenta</a>
                  </div>
             </form>
         </>

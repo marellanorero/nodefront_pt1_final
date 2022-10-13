@@ -3,7 +3,6 @@ import morgan from 'morgan';
 import {Server as SocketServer} from 'socket.io';
 import http from 'http';
 import cors from 'cors';
-const router = require('./routes')
 
 import {PORT} from './config.js';
 import { createSocket } from 'dgram';
@@ -19,7 +18,6 @@ const io = new SocketServer(server, {
 
 app.use(cors());
 app.use(morgan('dev'))
-app.use(router);
 
 io.on('connection', (socket) => {
     console.log(socket.id)
