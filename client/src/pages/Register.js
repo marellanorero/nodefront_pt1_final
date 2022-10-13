@@ -1,63 +1,71 @@
 import Logo from "../img/logo.png";
-import { Socket } from 'socket.io';
-import io from 'socket.io-client';
+//import { Socket } from 'socket.io';
+//import io from 'socket.io-client';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
+//import { useNavigate } from "react-router-dom";
 
 
 
-const socket = io('http://localhost:4000');
+
+//const socket = io('http://localhost:4000');
 
 function Register() {
 
-    /* const [name, setName] = useState(""); */
     const [userName, setUserName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
-    async function signUp () {
-        let item = { userName, email, password}
-        console.log(item)
+    async function signUp() {
+         let item = { userName: userName, email: email, password: password}
+        console.log(item) 
 
-        let result = await fetch('http://localhost:8080/api/user/create', {
+        fetch('http://localhost:8080/api/user/create', {
             method: 'POST',
             body: JSON.stringify(item),
             headers: {
                 'Content-Type': 'application/json',
                 "Accept": 'application/json'
             }
+        }).then((response) => {
+            response.json(); 
+            console.log(response)})
+        .then((data) => {
+          console.log('Success:', data);
         })
-        const data = await result.json();
-        localStorage.setItem("user-info", JSON.stringify(data))
-        navigate.push('/login');
+        .catch((error) => {
+          console.error('Error:', error);
+        });
+
+        //localStorage.setItem("user-info", JSON.stringify(data))
+        //navigate.push('/login');
     }
 
+    console.log(userName, email, password)
 
     return (
         <>  
             <div className="row w-25 mx-auto">
                 <img className="mt-5" src={Logo} />
             </div>
-            <form action="/login" method="post" className="w-50 mx-auto mt-5 mb-5 shadow p-3 mb-5 bg-white rounded">
-                {/* <div className="mb-3">
-                    <label htmlFor="name" className="form-label" value={name} onChange={(e) => setName(e.target.value)}>Name</label>
-                    <input type="name" className="form-control" id="name" name="name" placeholder="John Smith"/>
-                </div> */}
+            <form className="w-50 mx-auto mt-5 mb-5 shadow p-3 mb-5 bg-white rounded"  onSubmit={(e) => {
+                        e.preventDefault()
+                        signUp();
+                    }}>
                 <div className="mb-3">
-                    <label htmlFor="username" className="form-label" value={userName} onChange={(e) => setUserName(e.target.value)}>Username</label>
-                    <input type="username" className="form-control" id="username" name="username" placeholder="John123"/>
+                    <label htmlFor="username" className="form-label" value={userName} >Username</label>
+                    <input type="text" className="form-control" id="username" name="username" placeholder="John123" onChange={(e) =>{setUserName(e.target.value)}}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label" value={email} onChange={(e) => setEmail(e.target.value)}>Email address</label>
-                    <input type="email" className="form-control" id="email" name="email" placeholder="name@example.com"/>
+                    <label htmlFor="email" className="form-label" value={email} >Email address</label>
+                    <input type="email" className="form-control" id="email" name="email" placeholder="name@example.com" onChange={(e) =>{setEmail(e.target.value)}}/>
                 </div>
                 <div className="mb-3">
-                    <label htmlFor="password" className="form-label" value={password} onChange={(e) => setPassword(e.target.value)}>Password</label>
-                    <input className="form-control" id="password" name="password" placeholder="******" rows="3"></input>
+                    <label htmlFor="password" className="form-label" value={password}>Password</label>
+                    <input className="form-control" id="password" name="password" placeholder="******" rows="3" onChange={(e) =>{setPassword(e.target.value)}}></input>
                 </div>
                  <div className="d-grid">
-                    <button className=" btn btn-primary  btn-sm gap-2" onClick={signUp}>Register</button>
+                    <button type="submit" className=" btn btn-primary  btn-sm gap-2">Register</button>
                  </div>
             </form>
         </>

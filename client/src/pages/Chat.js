@@ -1,12 +1,12 @@
 
-import { Socket } from 'socket.io';
+/* import { Socket } from 'socket.io'; */
 import './Chat.css';
-import io from 'socket.io-client';
+/* import io from 'socket.io-client'; */
 import { useState, useEffect } from 'react'
 import { BiMailSend } from "react-icons/bi";
 
 
-const socket = io('http://localhost:4000');
+/* const ocket = io('http://localhost:4000'); */
 
 function Chat() {
 
@@ -15,7 +15,7 @@ function Chat() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    socket.emit('message', message)
+   // socket.emit('message', message)
     const newMessage = {
       body: message,
       from: "Me: "
@@ -24,7 +24,7 @@ function Chat() {
     setMessages([...messages, newMessage])
   }
 
-  useEffect(() => {
+  /* useEffect(() => {
     const receiveMessage = message => {
       setMessages([...messages, message])
     }
@@ -33,7 +33,7 @@ function Chat() {
     return () => {
       socket.off('message', receiveMessage)
     }
-  }, [messages])
+  }, [messages]) */
 
   return (
     <>

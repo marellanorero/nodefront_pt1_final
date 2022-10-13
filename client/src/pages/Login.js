@@ -1,6 +1,6 @@
 import Logo from "../img/logo.png";
 import Chat from '../pages/Chat';
-import { Socket } from 'socket.io';
+//import { Socket } from 'socket.io';
 import io from 'socket.io-client';
 
 import { useState, useEffect } from 'react';
@@ -24,7 +24,7 @@ function Login() {
     }, [CONNECTION_PORT])
 
     const connectToChat = async () => {
-        setLoggedIn = true;
+        setLoggedIn(true);
         socket.emit('join_chat', email)
 
         let item = { email, password}
