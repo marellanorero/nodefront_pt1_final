@@ -1,41 +1,40 @@
 
-import { Socket } from 'socket.io'; 
+//import { Socket } from 'socket.io'; 
 import './Chat.css';
-import io from 'socket.io-client'; 
+//import io from 'socket.io-client'; 
 import { useState, useEffect } from 'react'
 import { BiMailSend } from "react-icons/bi";
 import { BsSearch } from "react-icons/bs";
 import { FcSms } from "react-icons/fc";
+import { useNavigate } from "react-router-dom";
 
 
-const socket = io('http://localhost:4000'); 
+//const socket = io('http://localhost:4000'); 
 
 function Chat() {
+  const navigate = useNavigate();
 
   const [message, setMessage] = useState('')
   const [messages, setMessages] = useState([])
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    socket.emit('message', message)
-    const newMessage = {
-      body: message,
-      from: "Me: "
-    }
-    setMessage('')
-    setMessages([...messages, newMessage])
+
+  const handleLogout = () => {
+    const currentUser = sessionStorage.getItem("user")
+    const parsedUser =JSON.parse(currentUser)
+    const id = parsedUser._id
+
+    const requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+    };
+    fetch(`http://localhost:8080/api/user/logout/${id}`, requestOptions)
+      .then((response) => response.json())
+      .then((data) => {
+        //console.log(data.data)
+        navigate("/login");
+      });
   }
-
-  useEffect(() => {
-    const receiveMessage = message => {
-      setMessages([...messages, message])
-    }
-    socket.on('message', receiveMessage)
-
-    return () => {
-      socket.off('message', receiveMessage)
-    }
-  }, [messages]) 
+  
 
   return (
     <>
@@ -44,35 +43,40 @@ function Chat() {
           <div className="col-lg-12">
             <div className="card chat-app h-100">
               <div id="plist" className="people-list">
-              <div class="row align-items-start">
-                <div class="col-2 icons"><BsSearch /></div>
-                <div class="col-8"> <input type="text" className=" col-8 form-control" placeholder="Search..." /></div>
-                <div class="col-2 icons dropdown"><FcSms /></div>
+              <div className="row align-items-start">
+                <div className="col-2 icons"><BsSearch /></div>
+                <div className="col-8"> <input type="text" className=" col-8 form-control" placeholder="Search..." /></div>
+                <div className="col-2 icons dropdown"><FcSms /></div>
               </div>
                 <ul className="list-unstyled chat-list mt-2 mb-0">
                   <li className="clearfix">
                     <img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt="avatar" />
+
                     <div className="about">
                       <div className="name">Vincent Porter</div>
                       <div className="status"> <i className="fa fa-circle offline"></i> left 7 mins ago </div>
                     </div>
+
                   </li>
                 </ul>
               </div>
               <div className="chat">
                 <div className="chat-header clearfix">
                   <div className="row">
-                    <div class="col">
+                    <div className="col">
                               <a href="javascript:void(0);" data-toggle="modal" data-target="#view_info">
                                   <img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt="avatar"/>
                               </a>
-                              <div class="chat-about">
-                                  <h6 class="m-b-0">Aiden Chavez</h6>
+                              <div className="chat-about">
+                                  <h6 className="m-b-0">Aiden Chavez</h6>
+                              </div>
+                              <div>
+                                <button className="logoutBtn" type="button" onClick={handleLogout}>Logout</button>
                               </div>
                           </div>
                     </div>
                 </div>
-                <form className="chat-message " onSubmit={handleSubmit}>
+                <form className="chat-message " /* onSubmit={handleSubmit} */>
                   <div className="chat-history">
                     <ul className="m-b-0">
                       {messages.map((message, index) => (
